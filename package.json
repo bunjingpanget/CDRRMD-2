@@ -1,0 +1,22 @@
+{
+  "name": "cddrmd-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:admin": "npm --workspace admin-web run dev",
+    "dev:user": "npm --workspace user-app run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "private": true,
+  "workspaces": [
+    "admin-web",
+    "user-app",
+    "backend"
+  ]
+}
