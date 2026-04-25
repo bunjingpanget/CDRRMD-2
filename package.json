@@ -1,0 +1,28 @@
+{
+  "name": "cddrmd-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently -k -n backend,admin,user -c green,cyan,yellow \"npm run dev:backend\" \"npm run dev:admin\" \"npm run dev:user:all\"",
+    "dev:backend": "npm --workspace backend run dev",
+    "dev:admin": "npm --workspace admin-web run dev",
+    "dev:user": "npm --workspace user-app run start",
+    "dev:user:all": "npm --workspace user-app run start -- --port 8095",
+    "dev:user:mobile": "npm --workspace user-app run start:tunnel -- --clear",
+    "test": "echo \"No automated tests configured yet\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "private": true,
+  "workspaces": [
+    "admin-web",
+    "user-app",
+    "backend"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

@@ -1,0 +1,3209 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,height=device-height initial-scale=1">
+    <meta name="description" content="Hazard assessment at your fingertips">
+    <meta name="author" content="GeoRisk Philippines">
+    <meta name="keyword" content="Hazard, Assessment, HazardHunter, HazardHunterPH">
+    <meta name="csrf-token" content="PCuCmGUJLJ0WYqthnmapJmQ7cGu1itP3TZRWQcUZ">
+
+    <link href="https://hazardhunter.georisk.gov.ph/favicon.ico" rel="shortcut icon">
+
+    <title>HazardHunterPH - Hazard assessment at your fingertips</title>
+
+    <link href="https://hazardhunter.georisk.gov.ph/dist/coreui/css/coreui.css" rel="stylesheet">
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/css/app.css">
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/dist/admin-lte/css/adminlte.min.css">
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/dist/@fortawesome/fontawesome-free/css/all.css">
+        
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/dist/leaflet/leaflet.css" />
+
+    
+    <link rel="stylesheet" type="text/css" href="https://hazardhunter.georisk.gov.ph/dist/daterangepicker/daterangepicker.css" />
+
+    
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/css/util.css">
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/css/hh_styles.css">
+
+    <style>
+        .drp-calendar.left {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body class="sidebar-mini layout-fixed layout-navbar-fixed">
+    <div class="wrapper">
+        <nav class="main-header navbar navbar-expand bg-info navbar-dark border-bottom fixed">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" id="pushmenu"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph" class="nav-link" data-original-title="Home Page">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span class="hidden-xs d-none d-sm-inline-block">Home</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/contact-us" class="nav-link" target="_blank"
+                data-original-title="Contact GeoRiskPH">
+                <i class="fa fa-address-book" aria-hidden="true"></i>
+                <span class="hidden-xs d-none d-sm-inline-block">Contact Us</span>
+            </a>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                <a href="https://hazardhunter.georisk.gov.ph/sso/signin" class="nav-link">
+                    <i class="fa fa-sign-in-alt" aria-hidden="true"></i>
+                    <span class="hidden-xs d-none d-sm-inline-block">Login</span>
+                </a>
+            </li>
+                <li class="nav-item">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button" data-toggle="tooltip"
+                data-placement="right" title="Fullscreen">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-widget="control-sidebar" data-slide="false" href="#" role="button"
+                id="btn-right-side-nav" data-toggle="tooltip" data-placement="right" title="Toogle right-sidenav">
+                <i class="c-icon c-icon-lg fa fa-th"></i>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+        <div>
+            <aside class="main-sidebar sidebar-light-info" >
+    
+    <a href="https://hazardhunter.georisk.gov.ph" class="brand-link">
+        <img src="https://hazardhunter.georisk.gov.ph/brand/hh_logo.png" alt="HazardHunterPH Logo" class="brand-image img-circle" style="opacity: .8">
+        <span class="brand-text font-weight-light">
+            <img src="https://hazardhunter.georisk.gov.ph/brand/hh_logotext.png" alt="Hazard Hunter Text" style="width:180px; height:auto;">
+        </span>
+    </a>
+
+    
+    <div class="sidebar p-b-80">
+        
+        <nav class="mt-2 m-b-30">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="true">
+                <li class="nav-header title">LOCATION TOOLS</li>
+<li class="nav-item">
+    <a id="useLoc" onclick="useCurrentLoc();" class="nav-link" data-toggle="tooltip" data-placement="right" data-original-title="Accuracy of location will depend on GPS of device being used">
+        <i class="fas fa-crosshairs text-info p-r-10"></i><p>Current Location</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a id="useLoc" onclick="useLonglat()" class="nav-link" data-toggle="tooltip" data-placement="right" data-original-title="Input coordinates for assessment">
+        <i class="fas fa-location-arrow text-info p-r-10"></i><p>Long-Lat Coordinates</p>
+    </a>
+</li>
+
+    <div class="modal" id="modal_longlat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <p><i>Please input the coordinates</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-12">
+                        <div class="row frm-input-coords" id="input-coords-dd">
+                            <div class="col-sm-6 text-center">
+                                <label class="">Longitude</label>
+                                <input class="form-control" type="number" name="inputlong" id="input-long" step="any" placeholder="0.0" required>
+                            </div>
+                            <div class="col-sm-6 text-center">
+                                <label class="">Latitude</label>
+                                <input class="form-control" type="number" name="inputlat" id="input-lat" step="any" placeholder="0.0" required>
+                            </div>
+                        </div>
+                
+                        <div class="row frm-input-coords" id="input-coords-dms" style="display: none;">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-sm-2 m-t-30">
+                                        <label class="">Longitude</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="row">
+                                            <div class="col-sm-4 text-center">
+                                                <label class="">Degree</label>
+                                                <input class="form-control input-group-lg" type="number" name="inputlongdeg" id="input-long-deg" step="any" placeholder="0.0" required>
+                                            </div>
+                                            <div class="col-sm-4 text-center">
+                                                <label class="">Minute</label>
+                                                <input class="form-control input-group-lg" type="number" name="inputlongmin" id="input-long-min" step="any" placeholder="0.0" required>
+                                            </div>
+                                            <div class="col-sm-4 text-center">
+                                                <label class="">Second <small>(Optional)</small></label>
+                                                <input class="form-control input-group-lg" type="number" name="inputlongsec" id="input-long-sec" step="any" placeholder="0.0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="row m-t-5">
+                                    <div class="col-sm-2 m-t-10">
+                                        <label class=" align-middle">Latitude</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <div class="row">
+                                            <div class="col-sm-4 text-center">
+                                                <input class="form-control input-group-lg" type="number" name="inputlatdeg" id="input-lat-deg" step="any" placeholder="0.0" required>
+                                            </div>
+                                            <div class="col-sm-4 text-center">
+                                                <input class="form-control input-group-lg" type="number" name="inputlatmin" id="input-lat-min" step="any" placeholder="0.0" required>
+                                            </div>
+                                            <div class="col-sm-4 text-center">
+                                                <input class="form-control input-group-lg" type="number" name="inputlatsec" id="input-lat-sec" step="any" placeholder="0.0">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="row m-t-10">
+                    <div class="col-sm-12 text-center">
+                        <a class="btn btn-info btn-xs switch-input-coor dd-dms-btn" id="dms"><span class="switch-label" style="color: #fff;">Degree Minute Second</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary btn-sm btn-search-latlong" id="submit-form" onclick="">Search</button>
+                <button type="button" class="btn btn-default btn-sm" id="btn_close" data-dismiss="modal">Close</button>
+                <input type="hidden" class="form-control button" value="1"  id ="rowCount">
+            </div>
+        </div>
+    </div>
+</div>
+
+                <li class="nav-header title">DISPLAY OPTIONS</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fas fa-map-marked text-info p-r-10"></i><p>Basemaps<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-google-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-google-basemap">Satellite Imagery (Google)</label>
+        </a>
+    </div>
+</li>
+        <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-osm-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-osm-basemap">Streets (OpenStreetMap)</label>
+        </a>
+    </div>
+</li>
+        <li class="nav-item">
+            <a class="nav-link"><i class="fas fa-globe text-info p-r-10"></i><p>Esri Basemaps<i class="right fa fa-angle-left"></i></p></a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-natgeo-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-natgeo-basemap">NatGeo</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-topo-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-topo-basemap">Topographic</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-delorme-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-delorme-basemap">Delorme</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-imagery-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-imagery-basemap">Satellite Imagery</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-terrain-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-terrain-basemap">Terrain</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-street-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-street-basemap">Streets</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-darkgray-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-darkgray-basemap">Dark Gray</label>
+        </a>
+    </div>
+</li>
+                <li class="nav-item">
+    <div class="custom-control custom-radio">
+        <a class="nav-link nav-label display-inline">
+            <input type="radio" class="custom-control-input rb-basemaps" id="rb-lightgray-basemap" name="basemap">
+            <label class="custom-control-label" for="rb-lightgray-basemap">Light Gray</label>
+        </a>
+    </div>
+</li>            </ul>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fas fa-exclamation-triangle text-info p-r-10"></i><p>Hazards<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fas fa-house-damage text-info p-r-10"></i><p>Seismic (Earthquake) <i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-active-fault" checked>
+            <label class="custom-control-label" for="ch-active-fault">Active Faults <a href="#" style="color: black;" data-toggle="modal" data-target="#modal-active-fault-disclaimer"><i class="fas fa-question-circle"></i></a> </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-fissure" >
+            <label class="custom-control-label" for="ch-fissure">Fissures </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-trench" checked>
+            <label class="custom-control-label" for="ch-trench">Trenches </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-gs" >
+            <label class="custom-control-label" for="ch-gs">Ground Shaking </label>
+        </a>
+    </div>
+</li>
+
+              
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-eil" >
+            <label class="custom-control-label" for="ch-eil">EQ-Induced Landslide </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-liquefaction" >
+            <label class="custom-control-label" for="ch-liquefaction">Liquefaction </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-seismic" id="ch-tsunami" >
+            <label class="custom-control-label" for="ch-tsunami">Tsunami </label>
+        </a>
+    </div>
+</li>
+
+              
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fas fa-mountain text-info p-r-10"></i><p>Volcanic <i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcano-type" id="ch-active-volcano" checked>
+            <label class="custom-control-label" for="ch-active-volcano">Active Volcanoes </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcano-type" id="ch-potentially-volcano" >
+            <label class="custom-control-label" for="ch-potentially-volcano">Potentially Active Volcanoes </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcano-type" id="ch-inactive-volcano" >
+            <label class="custom-control-label" for="ch-inactive-volcano">Inactive Volcanoes </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic seiches volcanic-hazard" id="ch-seiche-volcano" >
+            <label class="custom-control-label" for="ch-seiche-volcano">Volcanic Tsunami </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-hazard" id="ch-lahar-volcano" >
+            <label class="custom-control-label" for="ch-lahar-volcano">Lahar </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-hazard" id="ch-lava-volcano" >
+            <label class="custom-control-label" for="ch-lava-volcano">Lava Flow </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic ballistic-projectile volcanic-hazard" id="ch-ballistic-volcano" >
+            <label class="custom-control-label" for="ch-ballistic-volcano">Ballistic Projectile </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-fissure volcanic-hazard" id="ch-volcanic-fissure-volcano" >
+            <label class="custom-control-label" for="ch-volcanic-fissure-volcano">Volcanic Fissures (Taal) <a href="#" style="color: black;" data-toggle="modal" data-target="#modal-volcanic-fissure-disclaimer"><i class="fas fa-question-circle"></i></a> </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <p class="p-l-10">Pyroclastic Density Currents <i class="right fa fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-hazard" id="ch-base-surge-volcano" >
+            <label class="custom-control-label" for="ch-base-surge-volcano">Base Surge </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-hazard" id="ch-pyroclastic-volcano" >
+            <label class="custom-control-label" for="ch-pyroclastic-volcano">Pyroclastic Flow </label>
+        </a>
+    </div>
+</li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <p class="p-l-10">Danger Zone <i class="right fa fa-angle-left"></i></p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic" id="ch-pdz-volcano" >
+            <label class="custom-control-label" for="ch-pdz-volcano">Permanent Danger Zone </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic" id="ch-edz-volcano" >
+            <label class="custom-control-label" for="ch-edz-volcano">Extended Danger Zone </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-volcanic volcanic-hazard" id="ch-km-rad-volcano" >
+            <label class="custom-control-label" for="ch-km-rad-volcano">Kilometer Radius Zone </label>
+        </a>
+    </div>
+</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fas fa-cloud-sun-rain text-info p-r-10"></i> <p>Hydro-meteorological <i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet" id="ch-flood-hydromet" >
+            <label class="custom-control-label" for="ch-flood-hydromet">Flood (MGB) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet" id="ch-ril-hydromet" >
+            <label class="custom-control-label" for="ch-ril-hydromet">Rain-Induced Landslide (MGB) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet" id="ch-ss-hydromet" >
+            <label class="custom-control-label" for="ch-ss-hydromet">Storm Surge (DOST-PAGASA) <a href="#" style="color: black;" data-toggle="modal" data-target="#modal-storm-surge-disclaimer"><i class="fas fa-question-circle"></i></a> </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+                    <a class="nav-link">
+                        <i class="fas fa-wind text-info p-r-10"></i><p>Severe Winds <i class="right fa fa-angle-left"></i> </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+                                <i class="fas fa-wind text-info p-r-10"></i><p>Basic<i class="right fa fa-angle-left"></i> </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds basic" id="ch-severe-wind-basic-20-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-basic-20-yrp">20-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds basic" id="ch-severe-wind-basic-50-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-basic-50-yrp">50-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds basic" id="ch-severe-wind-basic-100-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-basic-100-yrp">100-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds basic" id="ch-severe-wind-basic-200-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-basic-200-yrp">200-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds basic" id="ch-severe-wind-basic-500-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-basic-500-yrp">500-Year Return Period </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+        
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+                                <i class="fas fa-wind text-info p-r-10"></i><p>Site-Specific<i class="right fa fa-angle-left"></i> </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds site-specific" id="ch-severe-wind-site-specific-20-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-site-specific-20-yrp">20-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds site-specific" id="ch-severe-wind-site-specific-50-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-site-specific-50-yrp">50-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds site-specific" id="ch-severe-wind-site-specific-100-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-site-specific-100-yrp">100-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds site-specific" id="ch-severe-wind-site-specific-200-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-site-specific-200-yrp">200-Year Return Period </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-hydromet severe-winds site-specific" id="ch-severe-wind-site-specific-500-yrp" >
+            <label class="custom-control-label" for="ch-severe-wind-site-specific-500-yrp">500-Year Return Period </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fas fa-medkit text-info p-r-10"></i> <p>Health and Safety<i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item has-treeview">
+                    <a class="nav-link"> 
+                        <i class="fas fa-vial text-info p-r-10"></i><p>Chemical (UP-NIH)<i class="right fa fa-angle-left"></i> </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-plant-samples" >
+            <label class="custom-control-label" for="ch-health-plant-samples">Plant Samples </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-fish-samples" >
+            <label class="custom-control-label" for="ch-health-fish-samples">Fish Samples </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-soil-samples" >
+            <label class="custom-control-label" for="ch-health-soil-samples">Soil Samples </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-water-samples" >
+            <label class="custom-control-label" for="ch-health-water-samples">Water Samples </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-ozone-level" >
+            <label class="custom-control-label" for="ch-health-ozone-level">Ozone Levels </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-nitrogen-level" >
+            <label class="custom-control-label" for="ch-health-nitrogen-level">Nitrogen Dioxide Levels </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-pm2" >
+            <label class="custom-control-label" for="ch-health-pm2">Particulate Matter 2.5 </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health chemical" id="ch-health-pm10" >
+            <label class="custom-control-label" for="ch-health-pm10">Particulate Matter 10 </label>
+        </a>
+    </div>
+</li>
+                    </ul>
+                </li>
+
+                <li class="nav-item has-treeview">
+                    <a class="nav-link">
+                    <i class="fas fa-hard-hat text-info p-r-10"></i><p>Occupational (UP-NIH)<i class="right fa fa-angle-left"></i> </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-noise-max" >
+            <label class="custom-control-label" for="ch-health-noise-max">Noise (Max) </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-noise-fast" >
+            <label class="custom-control-label" for="ch-health-noise-fast">Noise (Fast) </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-noise-slow" >
+            <label class="custom-control-label" for="ch-health-noise-slow">Noise (Slow) </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-mining-area" >
+            <label class="custom-control-label" for="ch-health-mining-area">Mining Areas </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-mine-processing" >
+            <label class="custom-control-label" for="ch-health-mine-processing">Mine Processing Area </label>
+        </a>
+    </div>
+</li>
+
+                        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-health health occupational" id="ch-health-landuse" >
+            <label class="custom-control-label" for="ch-health-landuse">Landuse </label>
+        </a>
+    </div>
+</li>
+                    </ul>
+                </li>
+                
+            </ul>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fas fa-users text-info p-r-10"></i><p>Exposure<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fa fa-school text-info p-r-10"></i><p>Public Schools (DepEd)<i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure schools" id="ch-elementary-school" >
+            <label class="custom-control-label" for="ch-elementary-school">Elementary Schools </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure schools" id="ch-secondary-school" >
+            <label class="custom-control-label" for="ch-secondary-school">Secondary Schools </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fa fa-hospital-symbol text-info p-r-10"></i><p>Health Facilities (DOH)<i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure health-facilities" id="ch-govt-health-facility" >
+            <label class="custom-control-label" for="ch-govt-health-facility">Government-owned </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure health-facilities" id="ch-private-health-facility" >
+            <label class="custom-control-label" for="ch-private-health-facility">Privately-owned </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure vaccination-facilities" id="ch-vaccination-facility" >
+            <label class="custom-control-label" for="ch-vaccination-facility">Vaccination Facilities </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fa fa-road text-info p-r-10"></i><p>Road Network (DPWH)<i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure road-network" id="ch-primary-road" >
+            <label class="custom-control-label" for="ch-primary-road">Primary Roads </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure road-network" id="ch-secondary-road" >
+            <label class="custom-control-label" for="ch-secondary-road">Secondary Roads </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fa fa-puzzle-piece text-info p-r-10"></i><p>Boundary (PSA)<i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure boundary" id="ch-regional-boundary" >
+            <label class="custom-control-label" for="ch-regional-boundary">Regional </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure boundary" id="ch-provincial-boundary" >
+            <label class="custom-control-label" for="ch-provincial-boundary">Provincial </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure boundary" id="ch-municipal-boundary" >
+            <label class="custom-control-label" for="ch-municipal-boundary">Municipal </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure boundary" id="ch-brgy-boundary" >
+            <label class="custom-control-label" for="ch-brgy-boundary">Barangay </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+    </ul>
+</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/nature-people.png" alt="SOS" class="sidebar-logo-icons">
+        <p>Coping Capacity<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-exposure safe-open-spaces" id="ch-safe-open-spaces" >
+            <label class="custom-control-label" for="ch-safe-open-spaces">Safe Open Spaces (NCR) <a href="#" style="color: black;" data-toggle="modal" data-target="#modal-sos-disclaimer"><i class="fas fa-question-circle"></i></a> </label>
+        </a>
+    </div>
+</li>
+    </ul>
+</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fa fa-house-user text-info p-r-10" id="sidebar-im"></i><p>Impact<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a class="nav-link" id="sidebar-im-ai-gen">
+                <i class="fa fa-robot text-info p-r-10"></i><p>AI-generated<i class="right fa fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item has-treeview">
+                    <a class="nav-link p-l-30">
+                        <p>
+                            2020
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link" id="sidebar-im-ai-gen-rolly">
+                                <i class="fas fa-cloud-rain text-info p-r-10"></i>
+                                <p>
+                                    Super Typhoon Rolly
+                                    <button type="button" class="btn btn-sm btn-link" style="color: black;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer">
+                                        <i class="fas fa-question-circle"></i>
+                                    </button>
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-impact ai-gen" id="ch-rolly-impact-flood" >
+            <label class="custom-control-label" for="ch-rolly-impact-flood"><font size="2px">Possible Area Flooded</font> </label>
+        </a>
+    </div>
+</li>
+        
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link" id="sidebar-im-ai-gen-ulysses">
+                                <i class="fas fa-cloud-rain text-info p-r-10"></i>
+                                <p>
+                                    Typhoon Ulysses
+                                    <button type="button" class="btn btn-sm btn-link" style="color: black;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer">
+                                        <i class="fas fa-question-circle"></i>
+                                    </button>
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-impact ai-gen ulysses" id="ch-ulysses-impact-flood" >
+            <label class="custom-control-label" for="ch-ulysses-impact-flood"><font size="2px">Possible Area Flooded</font> <font size="1px">(11/13/2020)</font> </label>
+        </a>
+    </div>
+</li>
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-impact ai-gen ulysses" id="ch-ulysses-impact-flood-nov-17" >
+            <label class="custom-control-label" for="ch-ulysses-impact-flood-nov-17"><font size="2px">Possible Area Flooded</font> <font size="1px">(11/17/2020)</font> </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a class="nav-link p-l-30">
+                        <p> 
+                            2021
+                            <i class="right fa fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link" id="sidebar-im-ai-gen-dante">
+                                <i class="fas fa-cloud-rain text-info p-r-10"></i>
+                                <p>
+                                    Typhoon Dante
+                                    <button type="button" class="btn btn-sm btn-link" style="color: black;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer">
+                                        <i class="fas fa-question-circle"></i>
+                                    </button>
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-impact ai-gen" id="ch-dante-impact-flood" >
+            <label class="custom-control-label" for="ch-dante-impact-flood"><font size="2px">Possible Area Flooded</font> </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+                                <i class="fas fa-cloud-rain text-info p-r-10"></i>
+                                <p>
+                                    Typhoon Odette
+                                    <button type="button" class="btn btn-sm btn-link" style="color: black;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer">
+                                        <i class="fas fa-question-circle"></i>
+                                    </button>
+                                    <i class="right fa fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-impact ai-gen odette-dec-2021" id="ch-typhoon-odette-impact-flood-dec-2021" >
+            <label class="custom-control-label" for="ch-typhoon-odette-impact-flood-dec-2021"><font size="2px">Possible Area Flooded</font> </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+    </ul>
+</li>
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fas fa-drafting-compass text-info p-r-10"></i><p>Advanced Layers<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item has-treeview">
+            <a class="nav-link">
+                <i class="fas fa-thermometer-three-quarters text-info p-r-10"></i><p>Climate of the Philippines<i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-climate-type" >
+            <label class="custom-control-label" for="ch-climate-type">Climate Types (DOST-PAGASA) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item has-treeview">
+                    <a class="nav-link">
+                        <i class="fas fa-rss text-info p-r-10"></i><p>Climate Projection (DOST-PAGASA)<i class="right fa fa-angle-left"></i> </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+                                <i class="fas fa-tint text-info p-r-10"></i><p>Rainfall (2036-2065)<i class="right fa fa-angle-left"></i> </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection rainfall" id="ch-climate-projection-rainfall-q1" >
+            <label class="custom-control-label" for="ch-climate-projection-rainfall-q1">December, January, February </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection rainfall" id="ch-climate-projection-rainfall-q2" >
+            <label class="custom-control-label" for="ch-climate-projection-rainfall-q2">March, April, May </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection rainfall" id="ch-climate-projection-rainfall-q3" >
+            <label class="custom-control-label" for="ch-climate-projection-rainfall-q3">June, July, August </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection rainfall" id="ch-climate-projection-rainfall-q4" >
+            <label class="custom-control-label" for="ch-climate-projection-rainfall-q4">September, October, November </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+        
+                        <li class="nav-item has-treeview">
+                            <a class="nav-link">
+                                <i class="fas fa-thermometer text-info p-r-10"></i><p>Mean Temperature (2036-2065)<i class="right fa fa-angle-left"></i> </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection mean-temperature" id="ch-climate-projection-mean-temperature-q1" >
+            <label class="custom-control-label" for="ch-climate-projection-mean-temperature-q1">December, January, February </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection mean-temperature" id="ch-climate-projection-mean-temperature-q2" >
+            <label class="custom-control-label" for="ch-climate-projection-mean-temperature-q2">March, April, May </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection mean-temperature" id="ch-climate-projection-mean-temperature-q3" >
+            <label class="custom-control-label" for="ch-climate-projection-mean-temperature-q3">June, July, August </label>
+        </a>
+    </div>
+</li>
+        
+                                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option climate-projection mean-temperature" id="ch-climate-projection-mean-temperature-q4" >
+            <label class="custom-control-label" for="ch-climate-projection-mean-temperature-q4">September, October, November </label>
+        </a>
+    </div>
+</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li class="nav-item has-treeview">
+            <a class="nav-link" data-toggle="tooltip" data-placement="right" data-original-title="Peak Ground Acceleration (PGA); Return Period (RP)">
+                <i class="fab fa-think-peaks text-info p-r-10"></i><p>Peak Ground Acceleration<i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-500rs-pem" >
+            <label class="custom-control-label" for="ch-500rs-pem">500-YRP on Rock Site </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-1000rs-pem" >
+            <label class="custom-control-label" for="ch-1000rs-pem">1000-YRP on Rock Site </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-2500rs-pem" >
+            <label class="custom-control-label" for="ch-2500rs-pem">2500-YRP on Rock Site </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-500ss-pem" >
+            <label class="custom-control-label" for="ch-500ss-pem">500-YRP on Stiff Soil </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link" title="Spectral Acceleration (SA); Return Period (RP)">
+                <i class="fas fa-rainbow text-info p-r-10"></i><p>Spectral Acceleration<i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-pt2s-sa" >
+            <label class="custom-control-label" for="ch-pt2s-sa">500-YRP on Rock Site (0.2s) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-pt5s-sa" >
+            <label class="custom-control-label" for="ch-pt5s-sa">500-YRP on Rock Site (0.5s) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-pt8s-sa" >
+            <label class="custom-control-label" for="ch-pt8s-sa">500-YRP on Rock Site (0.8s) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-1s-sa" >
+            <label class="custom-control-label" for="ch-1s-sa">500-YRP on Rock Site (1.0s) </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option" id="ch-3s-sa" >
+            <label class="custom-control-label" for="ch-3s-sa">500-YRP on Rock Site (3.0s) </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        <li class="nav-item has-treeview">
+            <a class="nav-link" title="Taal Base Surge Scenario">
+                <i class="fas fa-mountain text-info p-r-10"></i><p>Taal Scenario-based Eruptions<i class="right fa fa-angle-left"></i> </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-mc" >
+            <label class="custom-control-label" for="ch-base-surge-mc">Main Crater </label>
+        </a>
+    </div>
+</li>
+                
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-bmk" >
+            <label class="custom-control-label" for="ch-base-surge-bmk">Binintiang Malaki </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-bmt" >
+            <label class="custom-control-label" for="ch-base-surge-bmt">Binintiang Munti </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-oc" >
+            <label class="custom-control-label" for="ch-base-surge-oc">Off Calauit </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-pp" >
+            <label class="custom-control-label" for="ch-base-surge-pp">Pira-piraso </label>
+        </a>
+    </div>
+</li>
+
+                <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-adv-option ch-base-surge-scenario" id="ch-base-surge-eruption-vents" >
+            <label class="custom-control-label" for="ch-base-surge-eruption-vents">Eruption Vents </label>
+        </a>
+    </div>
+</li>
+            </ul>
+        </li>
+
+        
+    </ul>
+</li>
+
+
+
+
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <i class="fas fa-th-list text-info p-r-10"></i>
+        <p>Project LIGTAS
+            <i class="right fa fa-angle-left"></i>
+            <span style="color: black; margin-left: 5px;" data-toggle="modal" data-target="#modal-project-ligtas-disclaimer"><i class="fas fa-question-circle"></i></span>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-project-ligtas-landslide ligtas-landslide" id="ch-project-ligtas-landslide" >
+            <label class="custom-control-label" for="ch-project-ligtas-landslide">Recorded Landslide </label>
+        </a>
+    </div>
+</li>
+
+        <li class="nav-item">
+    <div class="custom-control custom-checkbox">
+        <a class="nav-link nav-label display-inline">
+            <input type="checkbox" class="custom-control-input ch-project-ligtas-station" id="ch-project-ligtas-station" >
+            <label class="custom-control-label" for="ch-project-ligtas-station">Landslide Early Warning </label>
+        </a>
+    </div>
+</li>
+    </ul>
+</li>
+                <li class="nav-header title">MONITORING</li>
+
+<li class="nav-item">
+    <a href="https://hazardhunter.georisk.gov.ph/monitoring/earthquake" target="_blank" class="nav-link">
+        <i class="fas fa-house-damage text-info p-r-10"></i>
+        <p>
+            Earthquake
+            <small style="padding-left: 3px;">
+                <i class="fas fa-external-link-alt"></i>
+            </small>
+        </p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="https://hazardhunter.georisk.gov.ph/monitoring/volcano" target="_blank" class="nav-link">
+        <i class="fas fa-mountain text-info p-r-10"></i>
+        <p>
+            Volcano
+            <small style="padding-left: 3px;">
+                <i class="fas fa-external-link-alt"></i>
+            </small>
+        </p>
+    </a>
+</li>
+
+
+
+<li class="nav-item has-treeview ">
+    <a class="nav-link">
+        <i class="fas fa-cloud-sun-rain text-info p-r-10"></i> <p>Tropical Cyclone<i class="right fa fa-angle-left"></i> </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <div class="custom-control custom-checkbox">
+                <a class="nav-link nav-label display-inline">
+                    <input type="checkbox" class="custom-control-input ch-hydromet" id="ch-par-hydromet" >
+                    <label class="custom-control-label" for="ch-par-hydromet"> Cyclone Track </label>
+                </a>
+            </div>
+        </li>
+    </ul>
+</li>                  
+                <li class="nav-header title">FORECAST</li>
+
+<li class="nav-item">
+    <a href="https://hazardhunter.georisk.gov.ph/forecast/tenday" target="_blank" class="nav-link"> 
+        <img src="https://hazardhunter.georisk.gov.ph/img/tenday.png" alt="TenDay Forecast Icon" class="p-r-10" style="width: 27px;">
+        <p>
+            PAGASA TenDay
+            <small style="padding-left: 3px;">
+                <i class="fas fa-external-link-alt"></i>
+            </small>
+        </p>
+    </a>
+</li>
+
+                <li class="nav-header title">RESOURCES</li>
+
+<li class="nav-item">
+    <a class="nav-link sidenav-link-right-sidebar" id="resources-impact-assessment" data-toggle="tooltip" data-placement="right" data-original-title="Conduct volcanic hazard assessment overviews for elements-at-risk">
+        <i class="fas fa-chart-line text-info p-r-10"></i><p>Hazard Assessment Overview</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a class="nav-link sidenav-link-right-sidebar" id="resources-download-maps" data-toggle="tooltip" data-placement="right" data-original-title="Click to Download DOST-PHIVOLCS Hazard Map Layouts">
+        <i class="fas fa-download text-info p-r-10"></i><p>Download Maps</p>
+    </a>
+</li>
+
+<li class="nav-item">
+    <a href="https://hazardhunter.georisk.gov.ph/glossary" class="nav-link" target="_blank" data-toggle="tooltip" data-placement="right" data-original-title="Know more about hazard-related terms">
+        <i class="fas fa-list text-info p-r-10"></i><p>Glossary of Terms</p>
+    </a>
+</li>
+
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+    <i class="fa fa-folder text-info p-r-10"></i><p>T'boli Health and Safety Hazards (UP-NIH Project)<i class="right fa fa-angle-left"></i> </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a class="nav-link nav-label" href="https://hazardhunter.georisk.gov.ph/nih_reports/1_Occupational_and_Environmental_Hazards_Associated_With_Small_Scale_Mining_in_Tboli_South_Cotabato.pdf" download="1_Occupational and Environmental Hazards Associated With Small Scale Mining in T'boli, South Cotabato.pdf" class="nav-link">
+            <i class="fas fa-file-pdf text-info p-r-10"></i> <p style="font-size: 14px;">Occupational and Environmental Hazards Associated With Small Scale Mining</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-label" href="https://hazardhunter.georisk.gov.ph/nih_reports/2_Volcanic_Earthquake_Landslide_and_Flooding_Hazard_in_Taboli_South_Cotabato.pdf" download="2_Volcanic, Earthquake, Landslide, and Flooding Hazards in T'boli, South Cotabato.pdf" class="nav-link">
+            <i class="fas fa-file-pdf text-info p-r-10"></i> <p style="font-size: 14px;">Volcanic, Earthquake, Landslide, and Flooding Hazard</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-label" href="https://hazardhunter.georisk.gov.ph/nih_reports/3_Climate_Hazards_in_Tboli_South_Cotabato.pdf" download="3_Climate Hazards in T'boli, South Cotabato.pdf" class="nav-link">
+            <i class="fas fa-file-pdf text-info p-r-10"></i> <p style="font-size: 14px;">Climate Hazards</p>
+            </a>
+        </li>
+    </ul>
+</li>
+
+                <li class="nav-header title">GeoRiskPH</li>
+<li class="nav-item has-treeview">
+    <a class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/HazardHunter_logo_w_TM.png" alt="HazardHunter_Logo" class="sidebar-logo-icons">
+        <p>HazardHunterPH<i class="right fa fa-angle-left"></i></p>
+    </a>
+    <ul class="nav nav-treeview">
+        
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/faqs" target="_blank" class="nav-link">
+                <p class="p-l-10">FAQs</p>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/videos" target="_blank" class="nav-link">
+                <p class="p-l-10">Videos</p>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/terms-of-use" target="_blank" class="nav-link">
+                <p class="p-l-10">Terms of Use</p>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/about-hazardhunterph" target="_blank" class="nav-link">
+                <p class="p-l-10">About HazardHunterPH</p>
+            </a>
+        </li>
+
+        
+        <li class="nav-item">
+            <a href="https://hazardhunter.georisk.gov.ph/contact-us" target="_blank" class="nav-link">
+                <p class="p-l-10">Contact Us</p>
+            </a>
+        </li>
+    </ul>
+</li>
+<li class="nav-item">
+    <a href="https://data.georisk.gov.ph/" target="_blank" class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/3DPH-logo.png" alt="3D_Logo" class="sidebar-logo-icons">
+        <p>3D Information System</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="https://geoanalytics.georisk.gov.ph/" target="_blank" class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/GeoAnalytics_logo_w_TM.png" alt="GeoAnalytics_Logo"
+            class="sidebar-logo-icons">
+        <p>GeoAnalyticsPH</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="https://geomapper.georisk.gov.ph/" target="_blank" class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/GeoMapper_logo_w_TM.png" alt="GeoMapper_Logo" class="sidebar-logo-icons">
+        <p>GeoMapperPH</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="https://plansmart.georisk.gov.ph/" target="_blank" class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/plansmart-logo-30x30.png" alt="PlanSmart_Logo" class="sidebar-logo-icons">
+        <p>PlanSmartPH</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="https://georisk.gov.ph" target="_blank" class="nav-link">
+        <img src="https://hazardhunter.georisk.gov.ph/img/icons/GeoRiskPH_logo_w_TM.png" alt="GeoRiskPH_Logo" class="sidebar-logo-icons">
+        <p>GeoRiskPH Integrated Platform</p>
+    </a>
+</li>
+            </ul>
+        </nav>
+        
+    </div>
+    
+</aside>
+
+
+                <div class="content-wrapper default-map" id="map">
+        <div id="ruler-instruction">Click to start drawing line.</div>
+        <div id="map-instruction"><span id="map-instruction-text">Double-click/tap on the map to start assessment </span><a
+                class="btn btn-sm btn-default m-l-10" id="btn-multi-point" style="display: none;">click here</a></div>
+        <img src="https://hazardhunter.georisk.gov.ph/brand/GeoRiskPH_banner_on_map.png" class="georisk-banner-citation">
+        <div class="mapbox-attribution-container">
+            <span id="footer_acknowledgement">&nbsp; Leaflet | Powered by Esri | Basemap: <span
+                    id="bm-source-footer">GoogleMap</span> |
+                Data Sources: PHIVOLCS, MGB, PAGASA, DepEd, DOH, DPWH &nbsp;</span>
+        </div>
+    </div>
+            <div id="div-data-privavy-notice" style="position: fixed;
+width: 100%;
+bottom: 0px;
+right: 0;
+left: 0;
+z-index: 10000;
+background: #323A38;
+color: #FFFFFF;
+border-top: 1px solid #FFFFFF;
+border-bottom: 1px solid #FFFFFF;
+border-bottom: none;
+box-shadow: 0 0 30px rgb(0 0 0 / 40%);
+box-sizing: border-box;">
+    
+    <a href="#" class="btn btn-sm btn-info float-right close-data-privacy-notice" style="margin: 20px">Close</a>
+    <p style="padding: 20px;">This site uses cookies and third-party service to analyze non-identifiable web traffic data. DOST-PHIVOLCS is committed to protect and respect your personal data privacy in compliance with the Data Privacy Act of 2012.</p>
+</div>
+    
+    <div class="modal-assessment" id="trivia-waiting-screen">
+    <div class="modal-assessment-content" >
+        <input type="hidden" id="trivia-hidden-img">
+        <div class="trivia-img"><img id="trivia-image" class="responsive-trivia-img" alt="Trivia" src="" width="400" height="400"></div>
+        <br>
+        <h5><span id="trivia-label"></span></h5>
+        <div class="loading-bar">
+            <div class="custom-progress">
+                <div class="indeterminate" style="width: 100%"></div>
+            </div>
+        </div>
+        <div class="loading-bar-100">
+            <div class="custom-progress">
+                <div class="determinate" style="width: 100%"></div>
+            </div>
+        </div>
+        <br>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger pull-right" id="trivia-cancel-btn" onclick="cancelAssessment()">Cancel</button>
+            <button type="button" class="btn btn-primary" id="trivia-see-result-btn" data-dismiss="modal" onclick="seeAssessment()">See Result</button>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="modal-methods-limitations" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 2005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Methods and Limitations</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-weight: bold; font-size: 14px">Data Disclaimer and Terms of Use</p>
+                        <p style="font-size: 13px">HazardHunterPH consumes existing information as provided by agencies to the GeoRiskPH Integrated System. Since some data used for calculations may be outdated, GeoRiskPH will not be liable for results that may differ from actual data. Also, hazards information may be refined and updated as new data become available to the system.</p>
+                        <p style="font-size: 13px">For point data for schools and health facilities, they may not represent the actual location of the facility and may need further verification. Similarly, administrative boundaries and the scope of the hazard may not fit well when calculating for their intersection. Hence, users are advised to view the hazard map overlain with the administrative boundary layer to visually verify how much of the area is within the scope of the hazard. Lastly, it should be noted that administrative boundaries used are only an approximate and are not considered authoritative.</p><br/>
+
+                        <p style="font-weight: bold; font-size: 14px">Calculation Method</p>
+                        <p style="font-size: 13px">Calculation for the level of exposure or proneness of barangays to hazards incorporates the slightest intersection between the barangay boundary and hazard layers. Values for prone population, schools, and health facilities per barangay, and prone barangays per municipality were summed up to obtain the values shown on the table. In the absence of data for built-up areas, population density figures per barangay were obtained by evenly distributing population across each barangay.<br/><br/>
+                        Barangays prone to hazard = barangays ∩ hazard <br/><br/>
+                        Population prone to hazard = population density * (barangay area ∩ hazard area) <br/><br/>
+                        Facilities prone to hazard = barangays ∩ hazard ∩ facilities (Note: Facilities may be schools or health facilities)<br/>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+    <div class="modal fade" id="modal-sos-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title">Disclaimer</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-size: 14px">The NAMRIA generated the Open Spaces (for NCR) using the following criteria: <br>
+                            1) Land use is Open/Vacant Space; <br>
+                            2) Area at least 200 square meters; and <br>
+                            3) Located outside the radius of 1.5 x the height of the adjacent buildings/structures. <br><br>
+
+                            The Open Spaces were checked using WorldView-3 (2017, NAMRIA), WorldView-4 (2018, DOST-ASTI) and Google recent imagery. <br>
+                            The buildings were generated using the LiDAR Digital Terrain Model (DTM) and Digital Surface Model (DSM). The buildings were buffered by its height multiplied by 1.5. The buffered buildings were overlaid to Land Use, and the Open Spaces were determined outside the buffered areas. <br><br>
+
+                            The Open Spaces with areas minimum of 200 sqm were extracted and checked with the recent imageries. The Open Spaces were assessed by PHIVOLCS from Earthquake-related hazards such as not transected by the Valley Fault System, no Tsunami, no Liquefaction and no Earthquake-Induced Landslides. The remaining open spaces without the said hazards are identified as the Safe Open Spaces (SOS). <br><br>
+
+                            The SOS were categorized according to area: Small (200 - 500 sqm), Medium (>500 - 5,000 sqm) and Large (> 5,000 sqm). The SOS were also divided into 4 quadrants: North, South, East and West, taking into considerations a scenario predicted by the MMEIRS study which indicates that Metro Manila could be split into 4 parts due to collapses of main bridges and liquefaction hazards. The ground validations of SOS were conducted in 2019 by the concerned local government units of Metro Manila with the technical assistance of NAMRIA. The LGUs validation activity was monitored by the DILG-NCR.<br></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="modal-active-fault-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title">Disclaimer</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-size: 14px">Depending on the basemaps used and methods employed during mapping, discrepancies may be observed between location of hazards or exposure information and actual ground observations. </br></br>
+                        For areas transected or are within 300 meters from active faults, we recommend that you refer to the Active Fault Map layouts produced by DOST-PHIVOLCS.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="modal-volcanic-fissure-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title">Disclaimer</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul style="font-size: 14px">
+                            <li>
+                                Volcanic fissures identified are based on results from preliminary field investigations. Hazard assessment may change, depending on results of final mapping and analysis conducted by DOST-PHIVOLCS scientists.
+                            </li>
+                            <li>
+                                Fissures may develop further if the condition that generated them persists, as a response to geological processes. For land-use planning and disaster risk reduction purposes, at least 5 meters on both sides of the fissure or at the edge of the deformation zone may be considered as a Zone of Avoidance.
+                            </li>
+                            <li>
+                                Stakeholders are advised to report to the Institute any fissures that may be observed in the project site since fissure mapping is still ongoing as this may change the assessment.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="modal fade" id="modal-storm-surge-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title">Disclaimer</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-size: 14px">While these maps provide valuable insights, they are scenario-based and should be used as a reference rather than an absolute prediction. Users are encouraged to complement these maps with real-time data, field assessments, and other relevant hazard information for a comprehensive risk assessment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="modal-impact-ai-generated-maps-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row" style="font-family: Arial, Helvetica, sans-serif">
+                    <div class="col-md-12 text-center p-t-20 p-b-20">
+                        <strong class="text-lg">DISCLAIMER</strong>
+                    </div>
+                    <div class="col-md-12 p-l-30 p-r-30" style="text-align: justify; font-size: 13px; ">
+                        <strong>
+                            <p>
+                                The Flood Impact Maps by DOST-ASTI were identified via Artificial Intelligence from a composite of three (3) Sentinel-1 SAR images. Please note that these have not been validated on the ground and the thematic accuracy might be lower in urban and forested areas due to inherent limitations of the SAR data and processing used. Please refer to <a href="https://www.int-arch-photogramm-remote-sens-spatial-inf-sci.net/XLIII-B3-2020/1663/2020/isprs-archives-XLIII-B3-2020-1663-2020.pdf" target="_blank">this paper</a> to know more about the methodology. 
+                            </p>
+                            <p>
+                                To optimize the use of this information in HazardHunterPH, DENR-MGB’s Flood Susceptibility information (violet shades) is displayed vis-a-vis DOST-ASTI's AI-generated flood information (red). The user may change basemaps to highlight areas and features of interest.
+                            </p>
+                        </strong>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" id="modal-project-ligtas-disclaimer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="z-index: 3005">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title">Disclaimer</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p style="font-size: 14px">Data provided by <i>Landslide Investigations on Geohazards and Timely Advisories in the Philippines</i> <a href="https://ligtas.uplb.edu.ph/" target="_blank"> (Project LIGTAS)</a>, funded by DOST, is being monitored by DOST-PCIEERD under the Manila Economic and Cultural Office (MECO) – Taipei Economic and Cultural Office’s (TECO) call for Volcanoes, Oceans, Typhoons, and Earthquakes (VOTE) collaborative research, in partnership with DOST-PAGASA, DOST-PHIVOLCS, and DENR-MGB. 
+                            Project LIGTAS is being implemented by UPLB-SESAM with support from IRNR-CFNR-UPLB, CEAT-UPLB, and Start Network together with partner local government units, and state universities and colleges.</p>
+
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <audio id="alert" src="https://hazardhunter.georisk.gov.ph/audio/danger.mp3" preload="auto"></audio>
+    <audio id="alert_low" src="https://hazardhunter.georisk.gov.ph/audio/danger_low.mp3" preload="auto"></audio>
+
+    
+
+        </div>
+
+        <aside class="control-sidebar control-sidebar-light">
+    <!-- Control sidebar content goes here -->
+    
+
+    <ul class="nav nav-tabs nav-underline nav-underline-primary" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link tab-active btn-panel" role="button" tabindex="0" href="#" data-toggle="tooltip" id="btn-assessment" data-placement="bottom" title="Assessment">
+                <i class="c-icon fas fa-file-alt"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link btn-panel" role="button" tabindex="0" href="#"  data-toggle="tooltip" id="btn-legend" data-placement="bottom" title="Legend">
+                <i class="c-icon fas fa-list"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link btn-panel" role="button" tabindex="0" href="#" data-toggle="tooltip" id="btn-event-monitoring" data-placement="bottom" title="Monitoring">
+                <i class="c-icon fab fa-searchengin"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link btn-panel" role="button" tabindex="0" href="#" data-toggle="tooltip" id="btn-assessment-overview" data-placement="bottom" title="Assessment Overview">
+                <i class="c-icon fas fa-chart-line"></i>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link btn-panel" role="button" tabindex="0" href="#" data-toggle="tooltip" id="btn-download-hazard-maps" data-placement="bottom" title="Download Maps">
+                <i class="c-icon fas fa-download"></i>
+            </a>
+        </li>
+    </ul>
+
+    <div class="tab-content coreui-tab-content">
+        <div class="tab-pane right-panels right-sidenav-panel" id="btn-assessment-panel" role="tabpanel">
+    <div class="col-md-12 right-sidenav-title docked-title">
+        <span class="sec-title-content">Assessment Results</span>
+    </div>
+
+    <div id="assessment-result" >
+        <div class="p-3 row" id="no-assessment">
+            <span style="font-size: 14px;">Choose a location and double click on the map to start assessment.</span>
+        </div>
+
+        <div class="row assessment-result-table" style="display: none;">
+            <div class="col-sm-12">
+                <div class="box-body table-responsive p-2" style="height: calc(100vh - 200px);">
+                    <table class='table table-sm table-condensed'>
+                        
+                        <tr><th colspan='2'>SEISMIC HAZARD ASSESSMENT</th> </tr>
+                        <tr><td style='width: 50%;'>Nearest Active Fault</td><td class='assess-data' id="active-fault-result"></td></tr>
+                        <tr><td>Ground Rupture</td><td class='assess-data' id="ground-rupture-result"></td></tr>
+                        <tr><td><a href='https://howsafeismyhouse.phivolcs.dost.gov.ph/' target='_blank' title='For more information, click here!'>Ground Shaking</a></td><td class='assess-data' id="ground-shaking-result"></td></tr>
+                        <tr><td><a href='https://www.phivolcs.dost.gov.ph/index.php/landslide/introduction-to-landslide' target='_blank'>Earthquake-Induced Landslide</a></td><td class='assess-data' id="eil-result"></td></tr>
+                        <tr><td><a href='https://www.phivolcs.dost.gov.ph/index.php/earthquake/earthquake-hazards' target='_blank' title='For more information, click here!'>Liquefaction</a></td><td class='assess-data' id="liquefaction-result"></td></tr>
+                        <tr><td><a href='https://www.phivolcs.dost.gov.ph/index.php/tsunami/introduction-to-tsunami' target='_blank' title='For more information, click here!'>Tsunami</a></td><td class='assess-data' id="tsunami-result"></td></tr>
+                        <tr class="row-result" id='fissure-row-result'><td>Distance from Nearest Fissure</td><td class='assess-data' id="fissure-result"></td></tr>
+        
+                        
+                        <tr><th colspan='2'>VOLCANIC HAZARD ASSESSMENT</th></tr>
+                        <tr><td><a href='https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/volcanoes-of-the-philippines' target='_blank'>Nearest Active Volcano</a></td><td class='assess-data' id="active-volcano-result"></td></tr>
+                        <tr class="row-result" id='pcf-row-result'><td><a href='https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Pyroclastic Flow</a></td><td class='assess-data' id="pcf-result"></td></tr>
+                        <tr><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/volcanoes-of-the-philippines' target='_blank' title='For more information, click here!'>Nearest Potentially Active Volcano</a></td><td class='assess-data' id="potent-volcano-result"></td></tr>
+                        <tr class="row-result" id='lava-row-result'><td><a href='https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Lava Flow</a></td><td class='assess-data' id="lava-result"></td></tr>
+                        <tr class="row-result" id='lahar-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank' title='For more information, click here!'>Lahar</a></td><td class='assess-data' id='lahar-result'></td></tr>
+                        <tr class="row-result" id='pdz-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Permanent Danger Zone</a></td><td class='assess-data' id='pdz-result'></td></tr>
+                        <tr class="row-result" id='edz-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Extended Danger Zone</a></td><td class='assess-data' id='edz-result'></td></tr>
+                        <tr class="row-result" id='bp-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Ballistic Projectiles</a></td><td class='assess-data' id='bp-result'></td></tr>
+                        <tr class="row-result" id='bs-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Base Surge</a></td><td class='assess-data' id='bs-result'></td></tr>
+                        <tr class="row-result" id='vol-tsunami-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Volcanic Tsunami</a></td><td class='assess-data' id='vol-tsunami-result'></td></tr>
+                        <tr class="row-result" id='vol-fissure-row-result'><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/introduction-to-volcanoes' target='_blank'>Distance from Nearest Volcanic Fissure</a></td><td class='assess-data' id='vol-fissure-result'></td></tr>
+                        <tr class="row-result" id='ash-fall-row-result'><td><a href = 'https://drive.google.com/file/d/0B8_KPQhbpktXQkFweEpiMG9NZ00/view' target='_blank'>Ashfall</a></td><td class='assess-data' id='ash-fall-result'></td></tr>
+        
+                        <tr><td><a href = 'https://www.phivolcs.dost.gov.ph/index.php/volcano-hazard/volcanoes-of-the-philippines' target='_blank' title='For more information, click here!'>Nearest Inactive Volcano</a></td><td class='assess-data' id="inactive-volcano-result"></td></tr>
+        
+                        
+                        <tr><th colspan='2'>HYDRO-METEOROLOGICAL HAZARD ASSESSMENT</th></tr>
+                        <tr class="row-result" id='flood-row-result'><td>Flood (MGB)</td><td class='assess-data' id="flood-result"></td></tr>
+                        <tr class="row-result" id='ril-row-result'><td>Rain-Induced Landslide (MGB)</td><td class='assess-data' id="ril-result"></td></tr>
+                        <tr><td><a href='http://bagong.pagasa.dost.gov.ph/information/storm-surge' target='_blank'>Storm Surge (PAGASA) </a></td><td class="assess-data" id="storm-surge-result"></td></tr>
+                        <tr><td>Severe Wind (PAGASA)</td><td class="assess-data" id="severe-wind-result"></td></tr>
+        
+                        
+                        <tr><th colspan='2'>NEAREST CRITICAL FACILITIES</th></tr>
+                        <tr><td>Nearest Public Elementary School</td><td class='assess-data' id="elementary-school"></td></tr>
+                        <tr><td>Nearest Public Secondary School</td><td class='assess-data' id="secondary-school"></td></tr>
+                        <tr><td>Nearest Government Health Facility</td><td class='assess-data' id="government-hospital"></td></tr>
+                        <tr><td>Nearest Private Health Facility</td><td class='assess-data' id="private-hospital"></td></tr>
+                        <tr><td>Nearest Primary Road Network</td><td class='assess-data' id="primary-road-network"></td></tr>
+                        <tr><td>Nearest Secondary Road Network</td><td class='assess-data' id="secondary-road-network"></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row p-t-5 assessment-result-table" style="display: none">
+            <div class="col-sm-12 m-b-5 docked-button">
+                
+                <a id="download-har-pdf" class="btn btn-success btn-sm btn-block" target="_blank" title="For comprehensive hazard assessment, click here!">View Report with Recommendations</a>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="tab-pane right-panels right-sidenav-panel" id="btn-legend-panel" role="tabpanel">
+    <div class="col-md-12 m-t-0 right-sidenav-title docked-title">
+        <span class="sec-title-content">Legend</span>
+    </div>
+
+    <div class="row p-2">
+        <div class="col-md-12" style="height: calc(100vh - 200px);">
+            
+            <div class="row legend-group" id="activefault-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Active Fault &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-active-fault-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="activefault-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="fissures-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Fissures</div>
+    <div class="col-md-12 legend-content" id="fissures-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="trench-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Trenches</div>
+    <div class="col-md-12 legend-content" id="trench-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="gs-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Ground Shaking</div>
+    <div class="col-md-12 legend-content" id="gs-legend-items"></div>
+</div>
+
+
+
+<div class="row legend-group" id="earthquakeinducedlandslide-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Earthquake-Induced Landslide</div>
+    <div class="col-md-12 legend-content" id="earthquakeinducedlandslide-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="liquefaction-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Liquefaction</div>
+    <div class="col-md-12 legend-content" id="liquefaction-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="tsunami-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Tsunami</div>
+    <div class="col-md-12 legend-content" id="tsunami-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="vol-location-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Volcano</div>
+    <div class="col-md-12 legend-content" id="vol-type-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="pyroclastic-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Pyroclastic Density Currents</div>
+    <div class="col-md-12 legend-content" id="pyroclastic-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="seiches-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Volcanic Tsunami</div>
+    <div class="col-md-12 legend-content" id="seiches-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="volcano-lahar-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Lahar</div>
+    <div class="col-md-12 legend-content" id="volcano-lahar-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="lava-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Lava Flow</div>
+    <div class="col-md-12 legend-content" id="lava-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="base-surge-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Base Surge</div>
+    <div class="col-md-12 legend-content" id="base-surge-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="ballistic-projectiles-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Ballistic Projectile</div>
+    <div class="col-md-12 legend-content" id="ballistic-projectiles-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="volcanic-fissure-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Volcanic Fissures &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-volcanic-fissure-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="volcanic-fissure-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="pdz-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Permanent Danger Zone</div>
+    <div class="col-md-12 legend-content" id="pdz-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="edz-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Extended Danger Zone</div>
+    <div class="col-md-12 legend-content" id="edz-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="kilometerradius-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Danger Zone Kilometer Radius</div>
+    <div class="col-md-12 legend-content" id="kilometerradius-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="flood-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Flood</div>
+    <div class="col-md-12 legend-content" id="flood-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="ril-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Rain-Induced Landslide</div>
+    <div class="col-md-12 legend-content" id="ril-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="ss-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Storm Surge</div>
+    <div class="col-md-12 legend-content" id="ss-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="par-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Philippine Area of Responsibility</div>
+    <div class="col-md-12 legend-content" id="par-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="cyclone-track-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Cyclone Track</div>
+    <div class="col-md-12 legend-content" id="cyclone-track-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-basic-20-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 20-Year Return Period (Basic)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-basic-20-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-basic-50-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 50-Year Return Period (Basic)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-basic-50-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-basic-100-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 100-Year Return Period (Basic)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-basic-100-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-basic-200-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 200-Year Return Period (Basic)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-basic-200-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-basic-500-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 500-Year Return Period (Basic)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-basic-500-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-site-specific-20-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 20-Year Return Period (Site Specific)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-site-specific-20-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-site-specific-50-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 50-Year Return Period (Site Specific)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-site-specific-50-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-site-specific-100-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 100-Year Return Period (Site Specific)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-site-specific-100-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-site-specific-200-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 200-Year Return Period (Site Specific)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-site-specific-200-yrp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="severe-wind-site-specific-500-yrp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Severe Wind 500-Year Return Period (Site Specific)</div>
+    <div class="col-md-12 legend-content" id="severe-wind-site-specific-500-yrp-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="exp-school-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Schools (DepEd)</div>
+    <div class="col-md-12 legend-content" id="exp-school-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="exp-health-facilities-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Health Facilities (DOH)</div>
+    <div class="col-md-12 legend-content" id="exp-health-facilities-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="exp-vaccination-facilities-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Vaccination Facilities (DOH)</div>
+    <div class="col-md-12 legend-content" id="exp-vaccination-facilities-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="exp-road-network-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Road Network (DPWH)</div>
+    <div class="col-md-12 legend-content" id="exp-road-network-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="exp-safe-open-spaces-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Safe Open Spaces (NAMRIA) &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-sos-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="exp-safe-open-spaces-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="exp-boundary-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Boundary (PSA)</div>
+    <div class="col-md-12 legend-content" id="exp-boundary-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="ifsar-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">IFSAR (NAMRIA)</div>
+    <div class="col-md-12 legend-content" id="ifsar-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="health-chemical-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Chemical Hazards (NIH)</div>
+    <div class="col-md-12 legend-content" id="health-chemical-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="health-occupational-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Occupational Hazards (NIH)</div>
+    <div class="col-md-12 legend-content" id="health-occupational-legend-items"></div>
+</div>
+
+ 
+            
+            <div class="row legend-group" id="pga-500rs-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">PGA Map: 500-Year RP on Rock Site <br> (Acceleration in g)</div>
+    <div class="col-md-12 legend-content" id="pga-500rs-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="pga-1000rs-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">PGA Map: 1000-Year RP on Rock Site <br> (Acceleration in g)</div>
+    <div class="col-md-12 legend-content" id="pga-1000rs-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="pga-2500rs-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">PGA Map: 2500-Year RP on Rock Site <br> (Acceleration in g)</div>
+    <div class="col-md-12 legend-content" id="pga-2500rs-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="pga-500ss-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">PGA Map: 500-Year RP on Stiff Soil <br> (Acceleration in g)</div>
+    <div class="col-md-12 legend-content" id="pga-500ss-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="sa-pt2s-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">SA Map: 0.2 seconds</div>
+    <div class="col-md-12 legend-content" id="sa-pt2s-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="sa-pt5s-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">SA Map: 0.5 seconds</div>
+    <div class="col-md-12 legend-content" id="sa-pt5s-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="sa-pt8s-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">SA Map: 0.8 seconds</div>
+    <div class="col-md-12 legend-content" id="sa-pt8s-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="sa-1s-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">SA Map: 1.0 second</div>
+    <div class="col-md-12 legend-content" id="sa-1s-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="sa-3s-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">SA Map: 3.0 seconds</div>
+    <div class="col-md-12 legend-content" id="sa-3s-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="taal-bs-mc-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Main Crater</div>
+    <div class="col-md-12 legend-content" id="taal-bs-mc-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="taal-bs-bmk-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Binintiang Malaki</div>
+    <div class="col-md-12 legend-content" id="taal-bs-bmk-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="taal-bs-bmt-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Binintiang Munti</div>
+    <div class="col-md-12 legend-content" id="taal-bs-bmt-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="taal-bs-oc-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Off Calauit</div>
+    <div class="col-md-12 legend-content" id="taal-bs-oc-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="taal-bs-pp-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Pira-piraso</div>
+    <div class="col-md-12 legend-content" id="taal-bs-pp-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="taal-eruption-vents-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Eruption Vents</div>
+    <div class="col-md-12 legend-content" id="taal-eruption-vents-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="im-rolly-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Super Typhoon Rolly &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="im-rolly-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="im-ulysses-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Typhoon Ulysses &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="im-ulysses-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="im-dante-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Typhoon Dante &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="im-dante-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="im-typhoon-odette-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Typhoon Odette &nbsp; <a href="#" style="color: white;" data-toggle="modal" data-target="#modal-impact-ai-generated-maps-disclaimer"><i class="fas fa-question-circle"></i></a></div>
+    <div class="col-md-12 legend-content" id="im-typhoon-odette-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="climate-type-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Climate Types</div>
+    <div class="col-md-12 legend-content" id="climate-type-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-rainfall-q1-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Rainfall Projection (Dec, Jan, Feb) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-rainfall-q1-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-rainfall-q2-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Rainfall Projection (Mar, Apr, May) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-rainfall-q2-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-rainfall-q3-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Rainfall Projection (Jun, Jul, Aug) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-rainfall-q3-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-rainfall-q4-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Rainfall Projection (Sep, Oct, Nov) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-rainfall-q4-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-mean-temperature-q1-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Mean Temperature Projection (Dec, Jan, Feb) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-mean-temperature-q1-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-mean-temperature-q2-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Mean Temperature Projection (Mar, Apr, May) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-mean-temperature-q2-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-mean-temperature-q3-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Mean Temperature Projection (Jun, Jul, Aug) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-mean-temperature-q3-legend-items"></div>
+</div>
+
+
+<div class="row legend-group" id="climate-projection-mean-temperature-q4-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Mean Temperature Projection (Sep, Oct, Nov) (2036-2065)</div>
+    <div class="col-md-12 legend-content" id="climate-projection-mean-temperature-q4-legend-items"></div>
+</div>
+
+            
+            <div class="row legend-group" id="landslide-aws-legend">
+    <div class="col-md-12 legend-title btn btn-info collapsible" style="height: auto;">Landslide Early Warning (20 km radius)</div>
+    <div class="col-md-12 legend-content" id="landslide-aws-items"></div>
+</div>
+ 
+
+        </div>
+    </div>
+</div>
+        <div class="tab-pane right-panels right-sidenav-panel" id="btn-event-monitoring-panel" role="tabpanel">
+    <div class="col-md-12 m-t-0 right-sidenav-title docked-title">
+        <span class="sec-title-content">Events Monitoring</span>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="height: calc(100vh - 150px);">
+            <div class="row m-t-20 m-l-5 m-r-5">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <a href="https://hazardhunter.georisk.gov.ph/monitoring/earthquake" target="_blank" class="btn btn-block btn-default">Earthquake</a>
+                        
+                    </div>
+                </div>
+        
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <a href="https://hazardhunter.georisk.gov.ph/monitoring/volcano" target="_blank" class="btn btn-block btn-default">Volcano</a>
+                        
+                    </div>
+                </div>
+            </div>
+        
+            <div class="event-monitoring-wrapper p-3" id="event-seismic" style="display:none;">
+                
+        
+                <div class="row m-t-5">
+                    <div class="col-sm-7">
+                        <label class="m-b-5">New EQ Event Alert</label>
+                    </div>
+        
+                    <div class="col-sm-5">
+                        <label class="c-switch c-switch-label c-switch-pill c-switch-info">
+                            <input class="c-switch-input" type="checkbox" id="eq-sound-alert-switch" checked><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                        </label>
+                    </div>
+                </div>
+        
+                <hr style="margin-bottom: 9px; margin-top: 3px;">
+        
+                <div class="row m-t-5">
+                    <div class="col-sm-4">
+                        <label class="m-b-5">Month & Year</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control form-control-sm event-filter-eq" id="event-filter-eq-month-year"></select>
+                    </div>
+                </div>
+        
+                <div class="row m-t-5">
+                    <div class="col-sm-4">
+                        <label class="m-b-5">Date Range</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <div id="event-filter-eq-date" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%; font-size: 14px;">
+                            <span></span> <i class="fa fa-caret-down"></i>
+                            <input type="hidden" id="hidden-date">
+                        </div>
+                    </div>
+                    <span class="m-l-10" style="font-size: 10px;"><i>Date Range filter can only search events for the <strong>selected month</strong>.</i></span>
+                </div>
+        
+                <div class="row m-t-10">
+                    <div class="col-sm-4">
+                        <label class="m-b-5">Magnitude</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control form-control-sm event-filter-eq" id="event-filter-eq-magnitude"></select>
+                    </div>
+                </div>
+        
+                <div class="row m-t-5">
+                    <div class="col-sm-4">
+                        <label class="m-b-5">Depth (km)</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-control form-control-sm event-filter-eq" id="event-filter-eq-depth"></select>
+                    </div>
+                </div>
+        
+                <div class="row m-t-5" id="eq-events-count-wrapper">
+                    <div class="col-sm-12">
+                        <label class="m-b-5">Total earthquake count: <strong id="eq-events-count"></strong></label>
+                    </div>
+                </div>
+        
+                <div class="row m-t-10">
+                    <div class="col-sm-7">
+                        <label class="m-b-5">Display Results</label>
+                    </div>
+        
+                    <div class="col-sm-5">
+                        <label class="c-switch c-switch-label c-switch-pill c-switch-primary">
+                            <input class="c-switch-input" type="checkbox" id="eq-events-display-switch"><span class="c-switch-slider" data-checked="✓" data-unchecked="✕"></span>
+                        </label>
+                    </div>
+                </div>
+        
+                <div class="row m-t-10">
+                    <div class="col-sm-12 text-center" style="font-size: 10px;">
+                        <i>Earthquake events data shown on the map are derived from the Philippine Seismic Network. For more information, visit <a href="https://earthquake.phivolcs.dost.gov.ph/" target="_blank">https://earthquake.phivolcs.dost.gov.ph/</a></i>
+                    </div>
+                </div>
+        
+                <table class="table table-condensed table-sm m-t-10" id="eq-events-legend" style="display: none;">
+                    <tr><td colspan="4" class="td_title legend-title align-middle text-center" style="background: #17a2b8;">LEGEND</td></tr>
+                    <tr id="img-latest-earthquake-legend" style="background: #d5d8db;">
+                        <td colspan="1" class="text-center"><img id="img-latest-earthquake" class="img-latest-earthquake" alt="Earthquake Events"></td>
+                        <td colspan="3">Latest Earthquake Event </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-weight: bold;" class="text-center">Magnitude Range</td>
+                        <td colspan="2" style="font-weight: bold;" class="text-center">Depth (km)</td>
+                    </tr>
+                </table>
+        
+            </div>
+        
+            <div class="event-monitoring-wrapper p-3" id="event-volcanic" style="display:none;">
+                <div class="row">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td class="volcano-alert-status-td text-center" style="width:32%"><strong>Volcano</strong></td>
+                                <td class="volcano-alert-status-td text-center" style="width:30%"><strong>Alert Level</strong></td>
+                                <td class="volcano-alert-status-td text-center" style="width:38%"><strong>Date Issued</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody id="volcano-alert-status-tbody">
+                        </tbody>
+                    </table>
+                </div>
+        
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="tab-pane right-panels right-sidenav-panel" id="btn-assessment-overview-panel" role="tabpanel">
+    <div class="col-md-12 m-t-0 right-sidenav-title docked-title">
+        <span class="sec-title-content">Hazard Assessment Overview</span>
+    </div>
+    <div class="row p-2" style="height: calc(100vh - 200px);">
+        <div class="col-sm-12">
+            <div class="form-group">
+                <label class="m-b-5">Choose category</label>
+                <select class="form-control form-control-sm" id="event-hazards-assessment-o">
+                    <option value="">Select</option>
+                    <option value="event-volcanic-assessment-o">Volcanic Hazards</option>
+                    <option value="event-assessment-o">Events</option>
+                </select>
+            </div>
+
+            <div class="assessment-o-wrapper" id="event-volcanic-assessment-o" style="display:none;">
+                <label class="m-t-10 m-b-5" style="font-weight: bold; font-size: 13px;">VOLCANO ANALYTICS</label>
+                <div class="row row m-t-5">
+                    <div class="col-sm-3">
+                        <label class="m-b-5">Volcano</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control form-control-sm event-filter-vol" id="event-filter-vol-volcano-assessment-o">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-t-5">
+                    <div class="col-sm-3">
+                        <label class="m-b-5">Hazard</label>
+                    </div>
+                    <div class="col-sm-9">
+                        <select class="form-control form-control-sm event-filter-vol" id="event-filter-vol-hazard-assessment-o">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row m-t-5" id="taal-bs-scenario-based-eruptions" style="display:none;">
+                    <div class="col-sm-12">
+                        <label class="m-b-5">Taal Scenario-based Eruptions</label>
+                    </div>
+                    <div class="col-sm-12">
+                        <select class="form-control form-control-sm event-filter-vol" id="event-filter-vol-bs-scenario-assessment-o">
+                            <option id="hazard-select-option" disabled="disabled" selected>Select</option>
+                            <option value="mc">Main Crater</option>
+                            <option value="bmk">Binintiang Malaki</option>
+                            <option value="bmt">Binintiang Munti</option>
+                            <option value="oc">Off Calauit</option>
+                            <option value="pp">Pira-piraso</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-12 m-t-15" style="text-align: center" id="quick-analytics-loading"> </div>
+                <div class="row m-t-15 vol-quick-analytics-assessment-o" style="display: none;">
+                    <div class="col-sm-12 m-t-10">
+                        <table class="table table-bordered" id="tbl-other-hazards" style="display: none;">
+                            <thead>
+                                <tr><td colspan="4" style="background: rgb(74, 74, 74, 0.8); color: white; font-weight: bold; text-align: center; font-size: 13px;">
+                                    Elements Prone to <span class="quick-analytics-values-o th-hazard-name" ></span> from <span class="quick-analytics-values-o th-volcano-name" >[Volcano]</span> </td> </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="volcano-alert-status-td" style="width: 8%"></td>
+                                    <td class="volcano-alert-status-td" style="width:58%">Population</td>
+                                    <td class="volcano-alert-status-td text-center" style="width:22%">~<span class="quick-analytics-values-o" id="total-population-count-o"></span></td>
+                                    <td class="volcano-alert-status-td" style="width: 12%; text-align: center;">
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="volcano-alert-status-td">
+                                        <a href="#" class="toggle-layers-o" id="barangay-markers"></a>
+                                    </td>
+                                    <td class="volcano-alert-status-td">Barangay</td>
+                                    <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-barangay-count-o"></span></td>
+                                    <td class="volcano-alert-status-td">
+                                        <a title="Download Excel" class="download-excel-o" id="aor-barangay-excel"></a>&nbsp;
+                                        <a title="Download CSV" class="download-csv-o" id="aor-barangay-csv"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="volcano-alert-status-td">
+                                        <a href="#" class="toggle-layers-o" id="e-schools-markers"></a>
+                                    </td>
+                                    <td class="volcano-alert-status-td">Elementary Schools</td>
+                                    <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="elem-school-count-o"></span></td>
+                                    <td class="volcano-alert-status-td">
+                                        <a title="Download Excel" class="download-excel-o" id="aor-e-schools-excel"></a>&nbsp;
+                                        <a title="Download CSV" class="download-csv-o" id="aor-e-schools-csv"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="volcano-alert-status-td">
+                                        <a href="#" class="toggle-layers-o" id="s-schools-markers"></a>
+                                    </td>
+                                    <td class="volcano-alert-status-td">Secondary Schools</td>
+                                    <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="hs-school-count-o"></span></td>
+                                    <td class="volcano-alert-status-td">
+                                        <a title="Download Excel" class="download-excel-o" id="aor-s-schools-excel"></a>&nbsp;
+                                        <a title="Download CSV" class="download-csv-o" id="aor-s-schools-csv"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="volcano-alert-status-td" style="width: 15px">
+                                        <a href="#" class="toggle-layers-o" id="gv-hf-markers"></a>
+                                    </td>
+                                    <td class="volcano-alert-status-td">Government Health Facilities</td>
+                                    <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="govt-hospital-count-o"></span></td>
+                                    <td class="volcano-alert-status-td" style="width: 40px">
+                                        <a title="Download Excel" class="download-excel-o" id="aor-gv-hf-excel"></a>&nbsp;
+                                        <a title="Download CSV" class="download-csv-o" id="aor-gv-hf-csv"></a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="volcano-alert-status-td" style="width: 15px">
+                                        <a href="#" class="toggle-layers-o" id="pv-hf-markers"></a>
+                                    </td>
+                                    <td class="volcano-alert-status-td">Private Health Facilities</td>
+                                    <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="private-hospital-count-o"></span></td>
+                                    <td class="volcano-alert-status-td" style="width: 40px">
+                                        <a title="Download Excel" class="download-excel-o" id="aor-pv-hf-excel"></a>&nbsp;
+                                        <a title="Download CSV" class="download-csv-o" id="aor-pv-hf-csv"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-bordered" id="tbl-other-kmr" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <td colspan="3" style="background: rgb(74, 74, 74, 0.8); color: white; font-weight: bold; text-align: center; font-size: 12px;">
+                                        Distance of Barangays from <br>
+                                        <span class="quick-analytics-values-o th-volcano-name" ></span> Volcano Main Crater/Eruptive Center
+                                    </td>
+                                </tr>
+                                <tr style="padding: 1px 1px 1px 1px">
+                                    <td></td>
+                                    <td>Distance</td>
+                                    <td>Total</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-0"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">0 to 1 kilometer</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-0"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-1"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 1 to 2 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-1"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-2"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 2 to 3 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-2"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-3"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 3 to 4 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-3"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-4"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 4 to 5 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-4"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-5"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 5 to 6 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-5"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-6"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 6 to 7 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-6"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-7"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 7 to 8 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-7"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-8"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 8 to 9 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-8"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-9"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 9 to 10 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-9"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-10"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 10 to 11 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-10"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-11"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 11 to 12 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-11"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-12"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 12 to 13 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-12"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-13"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 13 to 14 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-13"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-14"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 14 to 15 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-14"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-15"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 15 to 16 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-15"></span></td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="volcano-alert-status-td" style="width: 15px">
+                                            <a href="#" class="toggle-layers-kmr" id="kmr-toggle-16"></a>
+                                        </td>
+                                        <td class="volcano-alert-status-td">&gt; 16 to 17 kilometers</td>
+                                        <td class="volcano-alert-status-td text-center"><span class="quick-analytics-values-o" id="total-kmr-16"></span></td>
+                                    </tr>
+                                                            </tbody>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-sm-12 text-center" style="font-size: 11px;">
+                                Hazards and Danger Zones (PHIVOLCS); Administrative Boundaries (PSA, 2016), Population (PSA, 2015); Schools (DepEd, 2015); Health Facilities (DOH, 2016)
+                            </div>
+                        </div><br/>
+                        <div class="row">
+                            <div class="col-sm-12 text-center" style="font-size: 11px;">
+                                <a href="#" type="button" data-toggle="modal" data-target="#modal-methods-limitations">Click here to see Methods and Limitations</a>
+                            </div>
+                        </div><br/>
+                        <div class="col-sm-12 m-b-5 aor-report" >
+                            <a id="download-hao-pdf" class="btn btn-success btn-sm btn-block" target="_blank">View Full Report</a>
+
+                            
+                        </div>
+
+                        <div class="col-sm-12 m-b-5 aor-report" id="dl-hazard-maps-button-o"></div>
+
+                        <div class="row">
+                            <div class="col-sm-6 aor-kmr-report">
+                                <form action="https://ulap-reports.georisk.gov.ph/api/reports/volcano/analytics" method="POST" target="_blank">
+                                    <input style="display: none;" name="volcano" id="input-volcano-kmr">
+                                    <input style="display: none;" name="hazard" id="input-hazard-kmr">
+                                    <input type="hidden" name="_token" value="PCuCmGUJLJ0WYqthnmapJmQ7cGu1itP3TZRWQcUZ">
+                                    <button type="submit" class="btn btn-success btn-sm btn-block">View Full Report</button>
+                                </form>
+                            </div>
+                            <div class="col-sm-6 aor-kmr-report">
+                                <div class="btn-group">
+                                    <a href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-target="#">
+                                        Download File
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" id="barangays-kmr-excel">Download Excel</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" id="barangays-kmr-csv">Download CSV</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="assessment-o-wrapper" id="event-assessment-o" style="display:none;">
+                <label class="m-t-10 m-b-5" style="font-weight: bold; font-size: 13px;">EVENTS</label>
+
+                <div class="row m-t-5">
+                    <div class="col-sm-12">
+                        <select class="form-control form-control-sm event-filter-events" id="event-filter-events-o"></select>
+                    </div>
+                </div>
+
+                <div class="row m-t-15 events-wrapper-o" id="event-details" >
+                    <div class="col-sm-12">
+                        <table class="table table-bordered" id="tbl-events">
+                            <tbody id="tbl-events-tbody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <div class="tab-pane right-panels right-sidenav-panel" id="btn-download-hazard-maps-panel" role="tabpanel">
+   <div class="col-md-12 m-t-0 right-sidenav-title docked-title">
+        <span class="sec-title-content">Download Maps</span>
+    </div>
+    <div class="row" style="height: calc(100vh - 150px);">
+        <div class="col-md-12">
+            <div class="row p-3">
+                <div class="col-md-12">
+                    <div class="form-group location-hazard-maps-form">
+                        <label class="location-hazard-maps-title">Region</label>
+                        <select class="form-control location-hazard-maps" id='region-hazard-maps'>
+                        </select>
+                    </div>
+
+                    <div class="form-group location-hazard-maps-form">
+                        <label class="location-hazard-maps-title">Province/District</label>
+                        <select class="form-control location-hazard-maps" id='province-hazard-maps'>
+                        </select>
+                    </div>
+
+                    <div class="form-group location-hazard-maps-form">
+                        <label class="location-hazard-maps-title">Municipality/City</label>
+                        <select class="form-control location-hazard-maps" id='municipal-hazard-maps'>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="form-group location-hazard-maps-form">
+                        <label class="location-hazard-maps-title">Hazard Types</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 text-center">
+                            <div class="custom-control custom-checkbox checkbox-hazard-types">
+                                <input class="custom-control-input hazard-type-search" type="checkbox" id="checkbox-seismic" value="1" checked>
+                                <label for="checkbox-seismic" class="custom-control-label">Seismic</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 text-center">
+                            <div class="custom-control custom-checkbox checkbox-hazard-types">
+                                <input class="custom-control-input hazard-type-search" type="checkbox" id="checkbox-volcanic" value="2" checked>
+                                <label for="checkbox-volcanic" class="custom-control-label">Volcanic</label>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6 col-lg-4 col-xl-4 text-center">
+                            <div class="custom-control custom-checkbox checkbox-hazard-types">
+                                <input class="custom-control-input hazard-type-search" type="checkbox" id="checkbox-other-maps" value="4" checked>
+                                <label for="checkbox-other-maps" class="custom-control-label">Others</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row hazard-map-search-result p-3">
+                <div class="col-md-12">
+                    <div class="form-group location-hazard-maps-form">
+                        <label class="location-hazard-maps-title">Search result/s:</label>
+                    </div>
+                </div>
+
+                <div class="row" id="results-hazard-maps-download"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</aside>    </div>
+
+    <div id="fb-root"></div>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XRFEDTSPZJ"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-XRFEDTSPZJ');
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143273176-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-143273176-2');
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140671174-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'UA-140671174-1');
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0">
+    </script>
+
+    <script src="https://hazardhunter.georisk.gov.ph/dist/jquery/jquery.min.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/dist/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/dist/admin-lte/js/adminlte.min.js"></script>
+            <script>
+        const API_SERVER_URI = "https://api.georisk.gov.ph";
+        const GEORISK_REPORTS_URL = "https://ulap-reports.georisk.gov.ph";
+        const APP_URL = "https://hazardhunter.georisk.gov.ph";
+        let typhoon_track = false;
+        var typhoon_data = "";
+        let lineCycloneTrack = null;
+        let apptoken;
+        let ngatoken;
+        let mapservicelink = '';
+        let accesstoken;
+        let SETTINGS;
+        const use_query = true;
+        var pdfvcode = "";
+        var pdfhcode = "";
+        var basemapData = {"rb-natgeo-basemap":true,"rb-topo-basemap":true,"rb-delorme-basemap":true,"rb-imagery-basemap":true,"rb-terrain-basemap":true,"rb-street-basemap":true,"rb-darkgray-basemap":true,"rb-lightgray-basemap":true,"rb-osm-basemap":true,"rb-google-basemap":true};
+    </script>
+
+            <script>
+            let logged = false;
+        </script>
+      
+    
+    <script src="https://hazardhunter.georisk.gov.ph/dist/leaflet/leaflet.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/dist/esri-leaflet/esri-leaflet.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/dist/esri-leaflet/esri-leaflet-legend-compat-src.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/leaflet/leaflet-search.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/leaflet/GeometryUtil.js"></script>
+
+    
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.css"
+        integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="
+        crossorigin="">
+    <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js"
+        integrity="sha512-zdT4Pc2tIrc6uoYly2Wp8jh6EPEWaveqqD3sT0lf5yei19BC1WulGuh5CesB0ldBKZieKGD7Qyf/G0jdSe016A=="
+        crossorigin=""></script>
+
+    <script src="https://hazardhunter.georisk.gov.ph/dist/daterangepicker/moment.min.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/dist/daterangepicker/daterangepicker.js"></script>
+
+    
+    <script type="text/javascript"
+        src="https://maps.google.com/maps/api/js?key=AIzaSyAQLQw5VgPvkNyJyr8brtBrer8HWHylTEc&sensor=false&libraries=places">
+    </script>
+
+    
+    
+
+    
+    <script src="https://hazardhunter.georisk.gov.ph/dist/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/custom_v1.js"></script>
+
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/leaflet/Leaflet.draw.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/leaflet/Leaflet.Draw.Event.js"></script>
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/css/leaflet.draw.css" />
+
+    <script>
+        function lowerCaseDash(string) {
+            let result = string.replace(/ /g, '-');
+            return result.toLowerCase();
+        }
+
+        function titleCase(str) {
+            var splitStr = str.toLowerCase().split(' ');
+            for (var i = 0; i < splitStr.length; i++) {
+                splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+            }
+            return splitStr.join(' ');
+        }
+    </script>
+
+    <script>
+        // window.STATIC_PASSPORT = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NGQyZWM0YS01YjJmLTRiYmMtYjM3MS0zMTAyNDU5Y2FiZjIiLCJqdGkiOiI1YWQ4MzIzYjhhMWY1MGZmYmNlZjI5ZmFjZmEwY2NjZDU0MzU4NzQ0ZDQxOTRkYzdjN2UyZDhkNDliMzRjNTAzZDU0YzBjNGVhNGM5MTdlYyIsImlhdCI6MTc3MzMwMjUyNi4xMjcxNzcsIm5iZiI6MTc3MzMwMjUyNi4xMjcxODEsImV4cCI6MTc3NDUxMjEyNi4xMjA1NTIsInN1YiI6IiIsInNjb3BlcyI6WyJhbmFseXRpY3MiLCJhc3Nlc3NtZW50cyIsImRvd25sb2FkLW1hcHMiLCJldmVudHMtbW9kdWxlIiwiZ2VuZXJhbC1zZXR0aW5ncyIsImhoLXNldHRpbmdzIiwibW9uaXRvcmluZy1tb2R1bGUiLCJib3VuZGFyaWVzIiwicmVwb3J0cyJdfQ.Ppe_2knaVPn2re5a4onwo0x5k5Q_FwlmGpaOnZJQ52UyZPSUD2t5qkZkBBz-DAyoO6FQWqil34UY4qQapn9zKh6CWkvkkOh-ohf41l4Yqw8e8xbjroBl5I8KGpbL6f4SNXqofcO7qG3g8yy4CqULHgpJuW1DcHYVCd2hTPeJPzGR212_6ClbK1QOGGtY5ep4wz5sQ4-8O905q_v4CERiTP2eyUPwSnvfyZfeLIy5L7o-qW4Ew7W63FXBfFKkn7no5t4tSlqGjlZHckHjxID4Bii5ONRQQpnkezVKo_FmEfaGH7vqGIgcEoMJdv0Ur8-s6gbp-gHq-yawUwp_pBglH1TNlZJsuyZOrx1L2t0olZ7rQRBm8U6WQMgpVzVuYRBCL0iJZpjxIit8U6wyySkwcoi7BnWee8aKttJwsdHFFRP5bRAWLC_yo5_RII0AkQlizFz6m1Ta95eirJIzf-g4WTfrwNwh0fNkC3T1Sfr-B0PVUS-l0JXQ2MNHH64eJY7WudlBJ_IqfGbMi6lP9NezE0bspEUJXWk7To5meEGa23dWyJIbx07DqTtiD8fS6nQOmGQZAWc9xsdohV68ngdv_3XotP47CGWDmIguLzEgLDYZrZv3MVRitBk2jk3C2YoSSyGjxnsJWanUG0P7O7ms9i_t37Zrh7jwX8N6PAfPBHg";
+        $.ajax({
+            type: "GET",
+            url: "https://hazardhunter.georisk.gov.ph/passport-token",
+            // data: { _token: "PCuCmGUJLJ0WYqthnmapJmQ7cGu1itP3TZRWQcUZ" },
+            async: false,
+            dataType: "json",
+            error: function() {
+                sweetAlertErrorNotification();
+            }
+        }).done(function(data) {
+            accesstoken = `Bearer ${data.access_token}`;
+            $.ajax({
+                // url: `${API_SERVER_URI}/api/settings/hh-web`,
+                url: `${APP_URL}/api/hh-web`,
+                type: "POST",
+                // headers: {
+                //     Authorization: accesstoken
+                // },
+                data: {
+                    'access_token': accesstoken
+                },
+                async: false,
+                dataType: "json",
+                error: function() {
+                    sweetAlertErrorNotification();
+                }
+            }).done(function(results) {
+                mapservicelink =
+                    `${results.data.map_service.scheme}://${results.data.map_service.host}${results.data.map_service.path}`;
+                SETTINGS = results.data;
+            });
+
+            $.ajax({
+                type: "GET",
+                url: `${APP_URL}/get-token`,
+                dataType: "json",
+                async: false,
+                error: function() {
+                    sweetAlertErrorNotification();
+                }
+            }).done(function(results) {
+                apptoken = results.token;
+                ngatoken = results.tokenNga;
+            });
+        });
+
+
+    </script>
+    
+
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/Basemaps.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/InitializeMap.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesSeismic.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesVolcanic.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesHydromet.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesExposures.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesHealth.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesImpact.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ArcgisServicesAdvanceFeature.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/GenerateToken.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ControlMousePosition.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ToggleLayers.js"></script>
+    
+    
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/DefaultMap.js"></script>
+
+    
+    
+
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/BasicSearchFeature.js"></script>
+
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/mapControl.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ProcessAssessment_v1.2.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/DrawLineDistance.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/RenderParcel.js"></script>
+    
+    <link rel="stylesheet" href="https://hazardhunter.georisk.gov.ph/js/leaflet-ruler.css" />
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/LeafletDraw.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/LeafletCommand.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/Tools.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/UseCoordinates.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/RightSidenav.js"></script>
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/AssessmentOverview.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/ActiveFaultImages.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/LigtasLandslide.js"></script>
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/LigtasStations.js"></script>
+
+    
+        <script>
+        $(document).ready(function() {
+            $("#assessment-result-table").hide();
+            // loadTrivia();
+
+            $(".btn-panel").click(function() {
+                $(".right-panels").hide();
+                $(".btn-panel").removeClass("tab-active");
+                $("#" + this.id + "-panel").toggle();
+                $("#" + this.id).addClass("tab-active");
+            });
+            $("#map-instruction").show();
+
+            $(".custom-disclaimer-icon").click(function(e) {
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+            });
+        });
+
+        $(window).on('load', function() {
+            setTimeout(
+                function() {
+                    $('#modal-impact-layers-note').modal('show');
+                }, 2000
+            );
+
+            $('.sidebar-im').click(function() {
+                $('#sidebar-im').trigger('click');
+                $('#sidebar-im-ai-gen').trigger('click');
+
+                if (this.id === "popup-ty-rolly") {
+                    $('#sidebar-im-ai-gen-rolly').trigger('click');
+                    $('#ch-rolly-impact-flood').trigger('click');
+                } else if (this.id === "popup-ty-ulysses") {
+                    $('#sidebar-im-ai-gen-ulysses').trigger('click');
+                    $('#ch-ulysses-impact-flood-nov-17').trigger('click');
+                    $('#ch-ulysses-impact-flood').trigger('click');
+                }
+
+                let scrn = window.innerWidth;
+                if (scrn > 600) {
+                    $("#btn-right-side-nav").trigger("click");
+                    $(".btn-panel").removeClass("tab-active");
+                    $("#btn-legend").addClass("tab-active");
+                    $(".right-panels").hide();
+                    $("#btn-legend-panel").show();
+                }
+                $('#modal-impact-layers-note').modal('hide');
+            });
+        });
+    </script>
+
+            <script>
+            $("#btn-assessment-panel").show();
+        </script>
+    
+    
+    
+
+            <script>
+                basicSearchFunction();
+        </script>
+    
+    
+    
+    
+    
+    <script src="https://hazardhunter.georisk.gov.ph/js/indexjs/TyphoonTrack.js"></script>
+    <script>
+        window.STORE_ASSESSMENT = false;
+    </script>
+</body>
+
+</html>
+
